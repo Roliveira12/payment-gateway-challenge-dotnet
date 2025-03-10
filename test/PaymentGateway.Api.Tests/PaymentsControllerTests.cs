@@ -19,7 +19,7 @@ public class PaymentsControllerTests
         // Arrange
         var payment = new PostPaymentResponse
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             ExpiryYear = _random.Next(2023, 2030),
             ExpiryMonth = _random.Next(1, 12),
             Amount = _random.Next(1, 10000),

@@ -1,11 +1,9 @@
-﻿using PaymentGateway.Api.Models.Responses;
-
-namespace PaymentGateway.Api.Services;
+﻿namespace PaymentGateway.Infra.Repositories;
 
 public class PaymentsRepository
 {
     public List<PostPaymentResponse> Payments = new();
-    
+
     public void Add(PostPaymentResponse payment)
     {
         Payments.Add(payment);
@@ -13,6 +11,6 @@ public class PaymentsRepository
 
     public PostPaymentResponse Get(Guid id)
     {
-        return Payments.FirstOrDefault(p => p.Id == id.ToString());
+        return Payments.FirstOrDefault(p => p.Id == id);
     }
 }
