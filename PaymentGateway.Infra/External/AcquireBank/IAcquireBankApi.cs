@@ -6,6 +6,6 @@ namespace PaymentGateway.Infra.External.AcquireBank;
 
 public interface IAcquireBankApi
 {
-    [Post("payments")]
+    [Post("/payments")]
     Task<ApiResponse<BankPaymentResponse>> AuthorizePaymentAsync([Body] BankPaymentRequest bankPaymentRequest);
 }

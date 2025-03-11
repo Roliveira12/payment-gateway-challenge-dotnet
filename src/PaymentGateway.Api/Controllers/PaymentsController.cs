@@ -4,6 +4,9 @@ using PaymentGateway.Api.Models.Requests;
 using PaymentGateway.Api.Models.Responses;
 using PaymentGateway.Api.Services;
 using PaymentGateway.Application.UseCases.AuthorizePayment;
+using PaymentGateway.Application.UseCases.AuthorizePayment.Boundaries;
+
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PaymentGateway.Api.Controllers;
 
@@ -26,7 +29,11 @@ public class PaymentsController : Controller
         return new OkObjectResult(payment);
     }
 
-    [HttpPost("submit-payment")]
+
+    [HttpPost("authorize")]
+    [Produces("application/json")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Payment Authorization", typeof(AuthorizePaymentUseCaseOutput))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Input with error", typeof(ProblemDetails))]       
     public async Task<IActionResult> SubmitPaymentAsync(
         [FromServices] IAuthorizePaymentUseCase submitPaymentUseCase,
         [FromBody] PostPaymentRequest postPaymentRequest)
@@ -34,6 +41,11 @@ public class PaymentsController : Controller
         var input = postPaymentRequest.ToInput();
         var useCaseResult = await submitPaymentUseCase.ExecuteAsync(input);
 
+        if (!useCaseResult.Sucess)
+        {
+            return Problem(detail: useCaseResult.ErrorMessage, statusCode: useCaseResult.StatusCode);
+
+        }
         return Ok(useCaseResult.Data);
     }
 }

@@ -25,7 +25,7 @@ public sealed class AuthorizePaymentUseCase : IAuthorizePaymentUseCase
 
         if (!validationResult.IsValid)
         {
-            return UseCaseResult<AuthorizePaymentUseCaseOutput>.BadRequest(string.Join("|", validationResult.Errors));
+            return UseCaseResult<AuthorizePaymentUseCaseOutput>.BadRequest(string.Join(" | ", validationResult.Errors));
         }
 
         //submit to acquireBank
@@ -41,6 +41,9 @@ public sealed class AuthorizePaymentUseCase : IAuthorizePaymentUseCase
 
         var response = await acquireBankApi.AuthorizePaymentAsync(bankRequest);
 
+        //after authorized, save on repo
+
+
         if (response.IsSuccessStatusCode)
         {
             return UseCaseResult<AuthorizePaymentUseCaseOutput>.UseCaseSucess(new AuthorizePaymentUseCaseOutput()
@@ -51,10 +54,9 @@ public sealed class AuthorizePaymentUseCase : IAuthorizePaymentUseCase
                 ExpiryDate = input.ExpiryDate,
                 Id = response.Content!.AuthorizationCode,
                 Status = response.Content.Authorized ? Domain.Enums.PaymentStatus.Authorized : Domain.Enums.PaymentStatus.Declined,
-
             });
         }
 
-        return UseCaseResult<AuthorizePaymentUseCaseOutput>.InternalServerError("Error", 500);
+        return UseCaseResult<AuthorizePaymentUseCaseOutput>.InternalServerError("We are unable to proceed with authorization now, please try again", 500);
     }
 }

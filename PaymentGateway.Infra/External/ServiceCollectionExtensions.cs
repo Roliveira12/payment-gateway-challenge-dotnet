@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 using PaymentGateway.Infra.External.AcquireBank;
+using PaymentGateway.Infra.External.AcquireBank.Configurations;
 
 using Refit;
 
@@ -14,20 +11,24 @@ namespace PaymentGateway.Infra.External
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddGatewayConfigurations(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<AcquireBankApiConfiguration>(configuration.GetSection("Gateways:AcquireBankApiConfiguration"));
 
-        public static IServiceCollection AddGatewayApis(this IServiceCollection services) {
+            return services;
+        }
 
-            
-            services.AddRefitClient<IAcquireBankApi>(provider =>
-            {
-                provider.GetRequiredService<IAcquireBankApi>()
-            })
-                    .ConfigureHttpClient(cfg =>
+        public static IServiceCollection AddGatewayApis(this IServiceCollection services)
+        {
+            services.AddRefitClient<IAcquireBankApi>()
+                    .ConfigureHttpClient((sp, client) =>
                     {
-                        cfg.Se
-                        cfg.BaseAddress
-                    })
+                        var configuration = sp.GetRequiredService<IOptions<AcquireBankApiConfiguration>>().Value;
+                        client.BaseAddress = new Uri(configuration.BaseUrl);
+                        client.Timeout = TimeSpan.FromMilliseconds(configuration.TimeoutMs);
+                    });
 
+            return services;
         }
     }
 }
