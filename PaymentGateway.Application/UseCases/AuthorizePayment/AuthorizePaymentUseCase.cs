@@ -39,7 +39,7 @@ public sealed class AuthorizePaymentUseCase : IAuthorizePaymentUseCase
             ExpiryDate = input.ExpiryDate,
         };
 
-        var response = await acquireBankApi.AuthorizeAsync(bankRequest);
+        var response = await acquireBankApi.AuthorizePaymentAsync(bankRequest);
 
         if (response.IsSuccessStatusCode)
         {
