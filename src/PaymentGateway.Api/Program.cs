@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-using PaymentGateway.Api.Services;
 using PaymentGateway.Application.ServiceCollectionExtensions;
 using PaymentGateway.Infra.External;
+using PaymentGateway.Infra.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,10 +20,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddUseCases();
+builder.Services.AddRepositories();
 
 builder.Services.AddGatewayConfigurations(builder.Configuration);
 builder.Services.AddGatewayApis();
-builder.Services.AddSingleton<PaymentsRepository>();
 
 var app = builder.Build();
 

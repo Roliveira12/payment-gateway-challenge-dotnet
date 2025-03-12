@@ -1,16 +1,18 @@
-﻿namespace PaymentGateway.Infra.Repositories;
+﻿using PaymentGateway.Domain.Entities;
+
+namespace PaymentGateway.Infra.Repositories;
 
 public class PaymentsRepository : IPaymentsRepository
 {
-    //public List<PostPaymentResponse> Payments = new();
+    private static List<PostPaymentDto> Payments = new();
 
-    //public void Add(PostPaymentResponse payment)
-    //{
-    //    Payments.Add(payment);
-    //}
+    public void Add(PostPaymentDto payment)
+    {
+        Payments.Add(payment);
+    }
 
-    //public PostPaymentResponse Get(Guid id)
-    //{
-    //    return Payments.FirstOrDefault(p => p.Id == id);
-    //}
+    public async Task<PostPaymentDto?> GetAsync(Guid id)
+    {
+        return Payments.FirstOrDefault(x => x.Id == id.ToString());
+    }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 
 using PaymentGateway.Infra.External.AcquireBank;
 using PaymentGateway.Infra.External.AcquireBank.Configurations;
+using PaymentGateway.Infra.Repositories;
 
 using Refit;
 
@@ -27,6 +28,13 @@ namespace PaymentGateway.Infra.External
                         client.BaseAddress = new Uri(configuration.BaseUrl);
                         client.Timeout = TimeSpan.FromMilliseconds(configuration.TimeoutMs);
                     });
+
+            return services;
+        }
+
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddSingleton<IPaymentsRepository, PaymentsRepository>();
 
             return services;
         }

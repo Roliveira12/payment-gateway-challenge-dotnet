@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Api.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Infra", "PaymentGateway.Infra\PaymentGateway.Infra.csproj", "{7F4CBD52-91C2-4405-98B9-702C73269CA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentGateway.Application", "PaymentGateway.Application\PaymentGateway.Application.csproj", "{BF71F10D-8121-4625-B64F-942BCE74B100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Application", "PaymentGateway.Application\PaymentGateway.Application.csproj", "{BF71F10D-8121-4625-B64F-942BCE74B100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentGateway.Domain", "PaymentGateway.Domain\PaymentGateway.Domain.csproj", "{991FEDA6-BE32-430A-A7BE-565640686153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Domain", "PaymentGateway.Domain\PaymentGateway.Domain.csproj", "{991FEDA6-BE32-430A-A7BE-565640686153}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,5 +53,8 @@ Global
 		{7F4CBD52-91C2-4405-98B9-702C73269CA8} = {F36BD266-CD75-4438-9BF9-CD91CDB18F2B}
 		{BF71F10D-8121-4625-B64F-942BCE74B100} = {F36BD266-CD75-4438-9BF9-CD91CDB18F2B}
 		{991FEDA6-BE32-430A-A7BE-565640686153} = {F36BD266-CD75-4438-9BF9-CD91CDB18F2B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35A895CD-94CF-44E3-BB0E-BE81BBA65AB6}
 	EndGlobalSection
 EndGlobal

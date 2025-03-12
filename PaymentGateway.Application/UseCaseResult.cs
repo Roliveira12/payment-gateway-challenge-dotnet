@@ -13,5 +13,5 @@ public class UseCaseResult<T>(bool sucess, T? data, string? errorMessage, int st
 
     public static UseCaseResult<T> BadRequest(string errorMessage) => new(false, default, errorMessage, (int)HttpStatusCode.BadRequest);
 
-    public static UseCaseResult<T> InternalServerError(string errorMessage, int statusCode) => new(false, default, errorMessage, statusCode);
+    public static UseCaseResult<T> Error(string errorMessage, int statusCode) => new(false, default, errorMessage, statusCode);
 }

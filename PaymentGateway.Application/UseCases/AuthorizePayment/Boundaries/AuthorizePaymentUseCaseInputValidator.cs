@@ -6,20 +6,20 @@ namespace PaymentGateway.Application.UseCases.AuthorizePayment.Boundaries;
 
 public class AuthorizePaymentUseCaseInputValidator : AbstractValidator<AuthorizePaymentUseCaseInput>
 {
-    private static readonly IReadOnlyCollection<string> SupportedCurrencies = ["USD", "BRL", "EUR"];
+    private static readonly IReadOnlyCollection<string> SupportedCurrencies = ["USD", "BRL", "EUR", "GBP"];
 
     public AuthorizePaymentUseCaseInputValidator()
     {
-        ClassLevelCascadeMode = CascadeMode.Stop;
+        RuleLevelCascadeMode = CascadeMode.Stop;
         RuleFor(x => x.CardNumber)
             .NotEmpty().WithMessage("Card number is required")
-            .Matches("^[0 - 9]+$").WithMessage("Card number must contain only numbers")
+            .Matches(@"^\d+$").WithMessage("Card number must contain only numbers")
             .Length(14, 19).WithMessage("Card number must be between 14 and 19 digits");
 
         RuleFor(x => x.ExpiryDate)
             .NotEmpty().WithMessage("ExpiryDate is required")
             .Matches("^([0-9][0-9])\\/\\d{4}$").WithMessage("ExpiryDate must be on format MM/yyyy")
-            .Must(BeAValidDate).WithMessage("Expiry Date must be on future");
+            .Must(BeAValidDate).WithMessage("ExpiryDate must be on future");
 
         RuleFor(x => x.Currency)
             .NotEmpty().WithMessage("Currency is required.")
