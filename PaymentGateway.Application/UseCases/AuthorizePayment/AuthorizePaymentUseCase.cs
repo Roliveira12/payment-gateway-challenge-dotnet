@@ -42,7 +42,6 @@ public sealed class AuthorizePaymentUseCase : IAuthorizePaymentUseCase
             return UseCaseResult<AuthorizePaymentUseCaseOutput>.BadRequest(string.Join(" | ", validationResult.Errors));
         }
 
-        //submit to acquireBank
 
         var bankRequest = new BankPaymentRequest()
         {
@@ -52,6 +51,8 @@ public sealed class AuthorizePaymentUseCase : IAuthorizePaymentUseCase
             Cvv = input.Cvv,
             ExpiryDate = input.ExpiryDate,
         };
+
+   
 
         var response = await _acquireBankApi.AuthorizePaymentAsync(bankRequest);
 
@@ -99,7 +100,8 @@ public sealed class AuthorizePaymentUseCase : IAuthorizePaymentUseCase
         //If Bank is unaviable we return Bad Gateway, since the error is not in the PaymentGateway, but is in the BankApi
         if (response.StatusCode is HttpStatusCode.ServiceUnavailable)
         {
-            return UseCaseResult<AuthorizePaymentUseCaseOutput>.Error(AuthorizePaymentErrorConstants.INTERNAL_ERROR_TO_AUTHORIZE, (int)HttpStatusCode.BadGateway);
+            return UseCaseResult<AuthorizePaymentUseCaseOutput>.Error(AuthorizePaymentErrorConstants.INTERNAL_ERROR_TO_AUTHORIZE, 
+                (int)HttpStatusCode.BadGateway);
         }
 
         return UseCaseResult<AuthorizePaymentUseCaseOutput>.Error(AuthorizePaymentErrorConstants.INTERNAL_ERROR_TO_AUTHORIZE, (int)response.StatusCode);

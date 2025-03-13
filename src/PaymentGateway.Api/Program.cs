@@ -1,7 +1,8 @@
 using System.Text.Json.Serialization;
 
+using PaymentGateway.Api.Middlewares;
 using PaymentGateway.Application.ServiceCollectionExtensions;
-using PaymentGateway.Infra.External;
+using PaymentGateway.Infra;
 using PaymentGateway.Infra.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 

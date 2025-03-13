@@ -1,4 +1,4 @@
-﻿namespace PaymentGateway.Application.UseCases.AuthorizePayment
+﻿namespace PaymentGateway.Application.UseCases.AuthorizePayment.Boundaries
 {
     public static class AuthorizePaymentErrorConstants
     {

@@ -1,14 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-
 using PaymentGateway.Infra.External.AcquireBank;
 using PaymentGateway.Infra.External.AcquireBank.Configurations;
 using PaymentGateway.Infra.Repositories;
 
 using Refit;
 
-namespace PaymentGateway.Infra.External
+namespace PaymentGateway.Infra
 {
     public static class ServiceCollectionExtensions
     {
